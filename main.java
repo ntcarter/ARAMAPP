@@ -1,5 +1,3 @@
-package apiStuff;
-
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.io.IOException;
@@ -11,7 +9,7 @@ public class main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        //Hashmap that relates a championID to the String name of the chamion
+        //Hashmap that relates a championID to the String name of the champion
         HashMap<Integer, String> champMap = new HashMap<Integer, String>();
         System.out.println("Hello World!");
         //initialize the apiCall class

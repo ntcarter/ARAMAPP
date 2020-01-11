@@ -1,4 +1,3 @@
-package apiStuff;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.*;
@@ -10,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ApiCall {
     //URL url = new URL("https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/P5Gxyl5vUXanXwY7oWRmmGxkMwKE_N_NvlVvAqEpQ5N_KTY?queue=450&endIndex=100&beginIndex=0&api_key=RGAPI-09a930b4-f60b-42bd-8a63-b32e9ec05634");
-    String key = "RGAPI-8c0da7d7-0e70-4ec8-b4f3-53ad90068181";
+    String key = "RGAPI-99354e77-8f10-40a4-b655-af766e9964b3";
     String acctID = "";
 
     public ApiCall() throws IOException {
@@ -40,10 +39,10 @@ public class ApiCall {
         //Counter for print tests can remove later
         int counter = 0;
         for(int i= 0; i< arr.length();i++){
-            System.out.println(counter +": "+arr.get(i));
+           // System.out.println(counter +": "+arr.get(i));
             JSONObject tmpObj = arr3.getJSONObject(i);
-            System.out.println(tmpObj.get("champion"));
-            System.out.println(tmpObj.get("gameId"));
+           // System.out.println(tmpObj.get("champion"));
+          // System.out.println(tmpObj.get("gameId"));
             JSONArray sw = new JSONArray();
             sw.put(tmpObj.get("champion"));
             sw.put("PLACEHOLDERWIN/LOSS");
@@ -51,8 +50,9 @@ public class ApiCall {
             counter++;
         }
 
-        System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEe: "+resultobj);
-        System.out.println(resultobj.get("3147744420"));
+       // System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEe: "+resultobj);
+       // System.out.println("LENGTH: " + resultobj.length());
+       // System.out.println(resultobj.get("3147744420"));
         //keeps track of the current game analyzed. starts at 100 since we have already looked at the first 100 (or all games if the user has less than 100).
         int tmpTotalGames = 100;
         //Not sure what this is doing I think its a safety thing so at most I will make 10 calls and not get black listed on accident.
@@ -62,8 +62,8 @@ public class ApiCall {
 
         while(tmpTotalGames <= totalGames && check >=0){
 
-            System.out.println("REQUEST ----------------------------------------------------------------------------------");
-            System.out.println("GAMES LEFT "+ tmpTotalGames);
+           // System.out.println("REQUEST ----------------------------------------------------------------------------------");
+           // System.out.println("GAMES LEFT "+ tmpTotalGames);
                 tmpURL = makeURL(tmpTotalGames, tmpTotalGames + 100);
                 BufferedReader in2 = new BufferedReader(new InputStreamReader(tmpURL.openStream()));
                 String tmp2 = in2.readLine();
@@ -78,17 +78,21 @@ public class ApiCall {
                 }
                 JSONArray arr2 = obj2.getJSONArray("matches");
                 for(int i= 0; i< arr2.length();i++){
-                        System.out.println(counter+": "+arr2.get(i));
+                      //  System.out.println(counter+": "+arr2.get(i));
                         JSONObject tmpObj = arr2.getJSONObject(i);
                          //System.out.println(tmpObj.get("champion"));
                          //System.out.println(tmpObj.get("gameId"));
+                         JSONArray sw = new JSONArray();
+                         sw.put(tmpObj.get("champion"));
+                         sw.put("PLACEHOLDERWIN/LOSS");
+                        resultobj.put(""+tmpObj.get("gameId"), sw);
                         counter++;
                 }
                 //we get 100 games at a time from riot API so check in intervals of 100.
                 tmpTotalGames +=100;
+                System.out.println("LENGTH: " + resultobj.length());
 
-
-            //RIOT api limits 100 requests every 2 min. Thats about 1 request every 1.4 seconds being on the safe side.
+            //RIOT api limits 100 requests every 2 min. Thats about 1 request every 1.4 seconds being on the safe side. rate limit sleep for the call at the beginning of the while.
             rateLimitSleep();
             check--;
         }
@@ -100,8 +104,10 @@ public class ApiCall {
         //Hash map to return
         HashMap<Integer, String> champMap = new HashMap<Integer, String>();
         //need to change the file path to be dynamic
-        File file = new File("C:\\Users\\Nate\\IdeaProjects\\RIOTAPITESTER\\src\\apiStuff\\champList.txt");
+       // File file = new File("C:\\Users\\Nate\\IdeaProjects\\RIOTAPITESTER\\src\\apiStuff\\champList.txt");
+        File file = new File("src/champList.txt");
         Scanner scan = new Scanner(file);
+
         //-1 is a temp value
         int champID = -1;
 
