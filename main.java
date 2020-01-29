@@ -23,7 +23,7 @@ public class main {
 
 
         Scanner in = new Scanner(System.in);
-        //delimits the username read in by the scanner so user name == username
+        //delimits the username read in by the scanner so "user name" == "username"
         in.useDelimiter(" ");
         while(true){
             System.out.print("Enter a username: ");
@@ -43,7 +43,11 @@ public class main {
 
         }
 
-        apiCall.winOrLoss("2689365069");
+        System.out.println("----------------------------------------------------------------------------------------");
+
+        Boolean w;
+        w = apiCall.winOrLoss("3071068418");
+        System.out.println("WWWWWWW W W W: "+w);
         //System.out.println(champMap.get(350));
        // System.out.println(champMap.get(266));
        // System.out.println(champMap.get(103));

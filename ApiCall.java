@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ApiCall {
     //URL url = new URL("https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/P5Gxyl5vUXanXwY7oWRmmGxkMwKE_N_NvlVvAqEpQ5N_KTY?queue=450&endIndex=100&beginIndex=0&api_key=RGAPI-09a930b4-f60b-42bd-8a63-b32e9ec05634");
-    String key = "RGAPI-99354e77-8f10-40a4-b655-af766e9964b3";
+    String key = "RGAPI-0e07b87d-88dc-49d4-ab7e-469191aa6a02";
     String acctID = "";
 
     public ApiCall() throws IOException {
@@ -71,7 +71,7 @@ public class ApiCall {
 
                 //Theres a bug with riot API sometimes the total games is incorrect this checks for the bug and corrects it.
                 //The bug is an incorrect total games value. Checking at least 1 past the initial totalGames value corrects the bug if it exists.
-                //The bug might exists for a small amount of people with an even multiple of 100 games
+                //The bug might still exist for a small amount of people with an even multiple of 100 games
                 int checkTotalGames = (int) obj2.get("totalGames");
                 if(checkTotalGames  > totalGames){
                     totalGames = checkTotalGames;
@@ -84,18 +84,23 @@ public class ApiCall {
                          //System.out.println(tmpObj.get("gameId"));
                          JSONArray sw = new JSONArray();
                          sw.put(tmpObj.get("champion"));
+                         //Right here call a new fuction that takes in a match ID and player acctID and returns if the match was a win or loss for this player
                          sw.put("PLACEHOLDERWIN/LOSS");
                         resultobj.put(""+tmpObj.get("gameId"), sw);
                         counter++;
                 }
                 //we get 100 games at a time from riot API so check in intervals of 100.
                 tmpTotalGames +=100;
+                System.out.println("RES: "+resultobj);
+                System.out.println("MATCHID: "+resultobj.keySet());
                 System.out.println("LENGTH: " + resultobj.length());
 
             //RIOT api limits 100 requests every 2 min. Thats about 1 request every 1.4 seconds being on the safe side. rate limit sleep for the call at the beginning of the while.
             rateLimitSleep();
             check--;
+            in2.close();
         }
+
         in.close();
     }
 
@@ -179,6 +184,7 @@ public class ApiCall {
      */
     public Boolean winOrLoss(String gameID) throws InterruptedException, IOException {
 
+        int participantId = -9999;
         String s = "https://na1.api.riotgames.com/lol/match/v4/matches/"+gameID+"?api_key="+key;
         URL u = new URL(s);
         BufferedReader in = new BufferedReader(new InputStreamReader(u.openStream()));
@@ -187,15 +193,43 @@ public class ApiCall {
         String tmp = in.readLine();
         //create a jsonobj based on the line read in.
         JSONObject obj = new JSONObject(tmp);
+        System.out.println("THIS IS THE OBJ: "+obj);
         //convert into JSON array so we can get one of the JSON values
         JSONArray arr = obj.getJSONArray("participantIdentities");
-
+        //This for loop gets the ID of each person in the game. Need to check it against our ID. These for loops assume there will always be 10 players in an aram game.
         for(int i = 0; i< 10; i++){
-            System.out.println("ARRJSON: "+arr.get(i));
+            //System.out.println("GETTTER:"+ obj.get("player") );
+            //System.out.println("ARRJSON: "+arr.get(i));
+            JSONObject tmpJSONobj = (JSONObject) arr.get(i);
+            // System.out.println("OBJJ: "+tmpJSONobj);
+            //System.out.println("RRRRRRRRRRRRRRRRRRRRRRRR: "+ tmpJSONobj.get("player"));
+            JSONObject tmpJSONobj2 = (JSONObject) tmpJSONobj.get("player");
+           // System.out.println(tmpJSONobj2.get("accountId"));
+
+            String acct = (String) tmpJSONobj2.get("accountId");
+            //gets the ParticipantID of the user to more easily find if it is a win or loss.
+            if(acct.equals(acctID)){
+               //tmpJSONobj.get("participantId");
+               // System.out.println("WERWRWRWR "+tmpJSONobj.get("participantId"));
+                participantId = (int) tmpJSONobj.get("participantId");
+                System.out.println(participantId);
+                break;
+            }
         }
 
+        JSONArray arr2 = obj.getJSONArray("participants");
 
-        System.out.println(s);
+        for(int i = 0; i< 10; i++){
+            System.out.println("TEST: "+arr2.get(i));
+            JSONObject te = arr2.getJSONObject(i);
+            if((int) te.get("participantId") == participantId){
+                JSONObject tt = (JSONObject) te.get("stats");
+                Boolean winOLoss = (Boolean) tt.get("win");
+                System.out.println("WINORLOSS???: "+winOLoss);
+                return winOLoss;
+            }
+        }
+
         return false;
     }
 }
