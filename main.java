@@ -1,4 +1,7 @@
+package apiStuff;
+
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,6 +18,7 @@ public class main {
         //initialize the apiCall class
         ApiCall apiCall = new ApiCall();
 
+        JSONObject doTheStuffJSONObj = new JSONObject();
         //Load the champion data from the file into the hashmap
         champMap = apiCall.parseChampFile();
 
@@ -38,7 +42,7 @@ public class main {
             else{
                 System.out.println("");
                 apiCall.getAccountID(s);
-                apiCall.doTheStuff();
+                doTheStuffJSONObj = apiCall.doTheStuff();
             }
 
         }
@@ -48,10 +52,13 @@ public class main {
         Boolean w;
         w = apiCall.winOrLoss("3071068418");
         System.out.println("WWWWWWW W W W: "+w);
+
+
+        System.out.println(doTheStuffJSONObj);
         //System.out.println(champMap.get(350));
-       // System.out.println(champMap.get(266));
-       // System.out.println(champMap.get(103));
-       // System.out.println(champMap.get(245));
-       // System.out.println(champMap.size());
+        // System.out.println(champMap.get(266));
+        // System.out.println(champMap.get(103));
+        // System.out.println(champMap.get(245));
+        // System.out.println(champMap.size());
     }
 }

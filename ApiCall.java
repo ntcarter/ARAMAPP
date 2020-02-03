@@ -17,7 +17,7 @@ public class ApiCall {
 
 
     //based off of an entered username this function gets all the ARAM game data for the user. Uses acctID global variable and makeURL function to work.
-    public void doTheStuff() throws IOException, InterruptedException {
+    public JSONObject doTheStuff() throws IOException, InterruptedException {
         JSONObject resultobj = new JSONObject();
         //first iteration of the calls is done separately. games 0-99
         URL beginningURL = makeURL(0,100);
@@ -106,6 +106,8 @@ public class ApiCall {
 
         System.out.println("TESTING THIS LINE:::::::: "+resultobj);
         in.close();
+
+        return resultobj;
     }
 
 
