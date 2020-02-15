@@ -12,7 +12,7 @@ public class main {
         HashMap<Integer, String> champMap = new HashMap<Integer, String>();
         System.out.println("Hello World!");
         //initialize the apiCall class
-        ApiCall apiCall = new ApiCall();
+        apiStuff.ApiCall apiCall = new apiStuff.ApiCall();
         WriteFile wf = new WriteFile();
 
         JSONObject doTheStuffJSONObj = new JSONObject();
