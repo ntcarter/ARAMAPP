@@ -1,5 +1,8 @@
-package project;
+package apiStuff;
+
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +17,6 @@ public class main {
         System.out.println("Hello World!");
         //initialize the apiCall class
         ApiCall apiCall = new ApiCall();
-        WriteFile wf = new WriteFile();
 
         JSONObject doTheStuffJSONObj = new JSONObject();
         //Load the champion data from the file into the hashmap
@@ -53,7 +55,10 @@ public class main {
 
 
         System.out.println(doTheStuffJSONObj);
-        wf.WriteJSONFile(doTheStuffJSONObj);
+
+
+        DataCalculations dataCalc = new DataCalculations(doTheStuffJSONObj, champMap);
+        dataCalc.calcWinLoss();
         //System.out.println(champMap.get(350));
         // System.out.println(champMap.get(266));
         // System.out.println(champMap.get(103));
