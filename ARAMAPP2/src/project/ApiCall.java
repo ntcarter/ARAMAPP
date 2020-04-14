@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class ApiCall {
-    String key = "RGAPI-f526b59e-81d7-43b6-8884-b3065aa27fed";
+    String key = "RGAPI-9a52d587-023a-4e63-96dc-98091b671fb7";
     String acctID = "";
 
     public ApiCall() throws IOException {
@@ -47,6 +47,7 @@ public class ApiCall {
             sw.put(tmpObj.get("champion"));
             boolean winOLoss;
             winOLoss = winOrLoss( ""+(long) tmpObj.get("gameId"));
+            System.out.println("win or loss: " + winOLoss);
             sw.put(winOLoss);
             resultobj.put(""+tmpObj.get("gameId"), sw);
             counter++;
@@ -88,6 +89,7 @@ public class ApiCall {
                 sw.put(tmpObj.get("champion"));
                 boolean winOLoss;
                 winOLoss = winOrLoss(""+(long) tmpObj.get("gameId"));
+                System.out.println("win or loss: " + winOLoss);
                 sw.put(winOLoss);
                 resultobj.put(""+tmpObj.get("gameId"), sw);
                 counter++;

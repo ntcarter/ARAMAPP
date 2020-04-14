@@ -48,10 +48,9 @@ public class main {
 
         }
 
-        System.out.println("----------------------------------------------------------------------------------------");
 
         Boolean w;
-        w = apiCall.winOrLoss("3071068418");
+        w = apiCall.winOrLoss("3276006750");
         System.out.println("WWWWWWW W W W: "+w);
 
 

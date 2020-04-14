@@ -9,12 +9,7 @@
 6) Use the file to calculate new WIN/LOSS.
 7)Save old win/loss for each champion to a file.
 8) When app is started display old win rate on file. (so you don't have to wait a long time to see data).
-?) Use javaFX to create a GUI.
-9) As we make API calls update the Win rate. (Need a UI that refreshes for this)(Could get away with re-printing all win rates after every 20 or 30 API calls)
-10) Find all the dates of all the patches that are still relevant for our data.
-11) allow win rates to be sorted/filtered by patch.
-12) Graphs and UI to show how winrate changed overTime?
-13) Port to python?
+9)Handle bad requests
 
 more RIOT project ideas)
 1) Summoner tracker. UI that shows all the summomer spells for a each enemy champion. Takes into account runes. Click on a summoner to put it on cooldown
