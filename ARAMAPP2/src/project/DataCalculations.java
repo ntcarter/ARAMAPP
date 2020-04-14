@@ -1,4 +1,4 @@
-package apiStuff;
+package project;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

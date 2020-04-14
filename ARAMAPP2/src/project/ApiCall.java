@@ -1,4 +1,4 @@
-package apiStuff;
+package project;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.*;
@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class ApiCall {
-    String key = "RGAPI-4dac9bd3-8999-4590-a39b-0308c5d2f8bc";
+    String key = "RGAPI-f526b59e-81d7-43b6-8884-b3065aa27fed";
     String acctID = "";
 
     public ApiCall() throws IOException {
@@ -32,7 +32,7 @@ public class ApiCall {
 
         //keeps track of the total games returned
         int totalGames = (int) obj.get("totalGames");
-        System.out.println(totalGames);
+        System.out.println("Total Games: " + totalGames);
 
 
         JSONArray arr3 = obj.getJSONArray("matches");
@@ -116,7 +116,8 @@ public class ApiCall {
         HashMap<Integer, String> champMap = new HashMap<Integer, String>();
         //need to change the file path to be dynamic
         // File file = new File("C:\\Users\\Nate\\IdeaProjects\\RIOTAPITESTER\\src\\apiStuff\\champList.txt");
-        File file = new File("C:\\Users\\Nate\\IdeaProjects\\RIOTAPITESTER\\src\\apiStuff\\champList.txt");
+        System.out.println(System.getProperty("user.dir"));
+        File file = new File(System.getProperty("user.dir") + "//src//project//champList.txt");
         Scanner scan = new Scanner(file);
 
         //-1 is a temp value

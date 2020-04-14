@@ -1,4 +1,4 @@
-package apiStuff;
+package project;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.json.JSONObject;
@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class main {
 
+    //for easy testing use account Giminki ~33 arams or IceLine ~ 130 arams
     public static void main(String[] args) throws IOException, InterruptedException {
 
         //Hashmap that relates a championID to the String name of the champion
